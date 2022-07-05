@@ -1,7 +1,9 @@
 function llamadaAPI() {
   fetch("https://pokeapi.co/api/v2/pokemon")
     .then((r) => r.json())
-    .then((rJSON) => nombrePokemon(rJSON.results))
+    .then((rJSON) => {
+      nombrePokemon(rJSON.results);
+        let next = rJSON[2]})
     .catch((error) => console.log("FALLÓ" + error));
 }
 
@@ -35,19 +37,45 @@ async function buttonClick(e) {
   $button.className = "list-group-item list-group-item-action active";
   $button["aria-current"] = "true";
 
-
-  fetch ($button.id)
-  .then((r) => r.json())
-  .then ((rJSON) => 
-    (rJSON.abilities).forEach(function (habilidad){
-        const caracteristica = document.createElement('li')
-        caracteristica.innerHTML = "<strong>Ability: </strong>" + habilidad.ability.name
-        caracteristica.className = "list-group-item"
-        document.querySelector("#caracteristicas").append(caracteristica)
-    }))
-    .catch((error) => console("FALLO" + error))
-
-
-
-
+  const removeMe = document.querySelectorAll("#poke");
+  if (removeMe.length > 0 ) {
+    for (let i = 1; i < removeMe.length; i++) {
+      removeMe[i].remove();
+    }
   }
+
+  document.querySelector("#titulo-caracteristicas").className = "list-group-item"
+
+  fetch($button.id)
+    .then((r) => r.json())
+    .then((rJSON) => {
+      rJSON.abilities.forEach(function (habilidad) {
+        const caracteristica = document.createElement("li");
+        caracteristica.innerHTML =
+          "<strong>Ability: </strong>" + habilidad.ability.name;
+        caracteristica.className = "list-group-item";
+        caracteristica.id = "poke";
+        document.querySelector("#caracteristicas").append(caracteristica);
+      });
+      const caracteristica = document.createElement("li");
+      caracteristica.innerHTML = "<strong>Height: </strong>" + rJSON.height;
+      caracteristica.className = "list-group-item";
+      caracteristica.id = "poke";
+      document.querySelector("#caracteristicas").append(caracteristica);
+
+      const caracteristica2 = document.createElement("li");
+      caracteristica2.innerHTML = "<strong>Weight: </strong>" + rJSON.weight;
+      caracteristica2.className = "list-group-item";
+      caracteristica2.id = "poke";
+      document.querySelector("#caracteristicas").append(caracteristica2);
+
+      const caracteristica3 = document.createElement("li");
+      caracteristica3.innerHTML = "<strong>Number: </strong>" + rJSON.id;
+      caracteristica3.className = "list-group-item";
+      caracteristica3.id = "poke";
+      document.querySelector("#caracteristicas").append(caracteristica3);
+
+      document.querySelector("img").src = rJSON.sprites.back_default;
+    })
+    .catch((error) => console.log("FALLO" + error));
+}

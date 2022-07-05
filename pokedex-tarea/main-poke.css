@@ -1,6 +1,7 @@
-body {
+html ,body {
     background-color: rgb(55, 55, 141);
-
+     height: 100%;
+     overflow: hidden
 }
 
 h1 {
@@ -16,6 +17,7 @@ h1 {
 
 .list-group {
     width: 25em;
+    height: 20em;
 }
 
 img {
@@ -32,12 +34,22 @@ height: 200px;
 
 #caracteristicas {
     left: 850px;
-    bottom: 170px;
+    top: 200px;
     position: absolute;
+    overflow: auto;
 }
 
 .pagination {
     position: relative;
     left: 520px;
-    top: 100px;
+    top: 10px;
+}
+
+#listaPokemones{
+
+    overflow: auto
+}
+
+.oculto{
+    display: none;
 }
